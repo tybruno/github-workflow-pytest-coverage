@@ -15,7 +15,8 @@ jobs:
       - name: Get Coverage Report
         run: |
           pwd
-          pytest --cov=./ --cov-report=xml
+          ls
+          pytest --cov=../ --cov-report=xml
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v2
         with:      
