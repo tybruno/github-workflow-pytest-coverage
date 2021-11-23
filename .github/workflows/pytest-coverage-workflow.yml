@@ -16,6 +16,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
+        python setup.py install
+        if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
+        if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
         pip install pytest-cov
     - name: Get Coverage Report
       run: |
