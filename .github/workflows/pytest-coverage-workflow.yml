@@ -9,16 +9,19 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
     steps:
-      - name: Install dependencies
-        run: |
-          pip install pytest-cov
-      - name: Get Coverage Report
-        run: |
-          pwd
-          ls
-          if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
-          pytest --cov=tests/ --cov-report=xml
-      - name: "Upload coverage to Codecov"
-        uses: codecov/codecov-action@v2
-        with:      
-          fail_ci_if_error: true
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        pip install pytest-cov
+        if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
+    - name: Get Coverage Report
+      run: |
+        pytest --cov=tests/ --cov-report=xml
+    - name: "Upload coverage to Codecov"
+      uses: codecov/codecov-action@v2
+      with:      
+        fail_ci_if_error: true
